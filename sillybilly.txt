@@ -3,10 +3,17 @@ local data = game:HttpGet("https://raw.githubusercontent.com/c0smilite/something
 
 function update(text)
     local args = {
-        [1] = text
+    [1] = {
+        [1] = {
+            [1] = "\1",
+            [2] = "\1692\179n\211nO+\179\142X}\6\166\232i",
+            [3] = ""
+        },
+        [2] = "\21"
+    }
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ChangeRPName"):FireServer(unpack(args))
+game:GetService("ReplicatedStorage"):WaitForChild("ffrostflame_bridgenet2@1.0.0"):WaitForChild("dataRemoteEvent"):FireServer(unpack(args))
 
 
 
