@@ -3,7 +3,7 @@ local data = game:HttpGet("https://raw.githubusercontent.com/c0smilite/something
 
 function update(text)
     local args = {
-        [1] = "d"
+        [1] = text
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ChangeRPName"):FireServer(unpack(args))
