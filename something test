@@ -3,16 +3,12 @@ local data = game:HttpGet("https://raw.githubusercontent.com/c0smilite/something
 
 function update(text)
     local args = {
-    [1] = "ChangeTIM",
-    [2] = text,
-    [3] = ""
+    [1] = "Update",
+    [2] = "",
+    [3] = text
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Booth"):WaitForChild("BoothFunc"):InvokeServer(unpack(args))
-
-
-
-
+game:GetService("ReplicatedStorage"):WaitForChild("Booth"):FireServer(unpack(args))
 
 end
 
