@@ -45,9 +45,9 @@ function getcolorforrange(r, g, b)
     end
     
     if closestcolour == "black" then
-        return "ðŸ–¤"
+        return "@"
     elseif closestcolour == "white" then
-        return "ðŸ¤"
+        return "%"
     elseif closestcolour == "gray" then
         return "ðŸ’¿"
     elseif closestcolour == "darkgray" then
