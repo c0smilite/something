@@ -1,15 +1,15 @@
 _G.Enabled = true
+
 local data = game:HttpGet("https://raw.githubusercontent.com/c0smilite/something/refs/heads/main/frames.txt")
 
 function update(text)
     local args = {
-    [1] = "RolePlayName",
-    [2] = text
+    [1] = "ChangeTIM",
+    [2] = text,
+    [3] = ""
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
-
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Booth"):WaitForChild("BoothFunc"):InvokeServer(unpack(args))
 
 end
 
@@ -35,7 +35,7 @@ local colours = {
 function getcolorforrange(r, g, b)
     local closestint = 100000
     local closestcolour = ""
-    
+
     for i, colour in pairs(colours) do
         local totalint = math.sqrt( ((r - colour[1])^2) + ((g - colour[2])^2) + ((b - colour[3])^2) )
         if totalint < closestint then
@@ -43,69 +43,69 @@ function getcolorforrange(r, g, b)
             closestcolour = i
         end
     end
-    
-    if closestcolour == "black" then
-        return "🖤"
-    elseif closestcolour == "white" then
-        return "🤍"
-    elseif closestcolour == "gray" then
-        return "💿"
-    elseif closestcolour == "darkgray" then
-        return "🌑"
-    elseif closestcolour == "blue" then
-        return "💙"
-    elseif closestcolour == "brown" then
-        return "🤎"
-    elseif closestcolour == "lightbrown" then
-        return "🧤"
-    elseif closestcolour == "verylightbrown" then
-        return "📜"
-    elseif closestcolour == "pale" then
-        return "🏻"
-    elseif closestcolour == "green" then
-        return "💚"
-    elseif closestcolour == "lightgreen" then
-        return "🌵"
-    elseif closestcolour == "orange" then
-        return "🧡"
-    elseif closestcolour == "purple" then
-        return "💜"
-    elseif closestcolour == "red" then
-        return "❤️"
-    elseif closestcolour == "yellow" then
-        return "💛"
-    elseif closestcolour == "lightyellow" then
-        return "📁"
+
+    if closestcolour == "black" then return "@"
+    elseif closestcolour == "white" then return "%"
+    elseif closestcolour == "gray" then return "$"
+    elseif closestcolour == "darkgray" then return "&"
+    elseif closestcolour == "blue" then return "^"
+    elseif closestcolour == "brown" then return "*"
+    elseif closestcolour == "lightbrown" then return "~"
+    elseif closestcolour == "verylightbrown" then return "="
+    elseif closestcolour == "pale" then return "+"
+    elseif closestcolour == "green" then return "?"
+    elseif closestcolour == "lightgreen" then return "O"
+    elseif closestcolour == "orange" then return "<"
+    elseif closestcolour == "purple" then return ">"
+    elseif closestcolour == "red" then return "Z"
+    elseif closestcolour == "yellow" then return "W"
+    elseif closestcolour == "lightyellow" then return "M"
     end
 end
 
 function Split(s, delimiter)
-   result = {};
-   for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-       table.insert(result, match);
-   end
-   return result;
+    local result = {}
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match)
+    end
+    return result
+end
+
+-- text chunk splitter
+local function splitTextIntoChunks(text, maxLen)
+    local result = {}
+    for i = 1, #text, maxLen do
+        table.insert(result, text:sub(i, i + maxLen - 1))
+    end
+    return result
 end
 
 local splitteddata = Split(data:sub(1, -2), "N")
-for fhnrteyrtnhi,line in pairs(splitteddata) do
+for _, line in pairs(splitteddata) do
     if _G.Enabled then
-       local finalstring = ""
-       local currentd = 1
-       local themlines = Split(line:sub(1, -2), "A")
-       for i, lineb in pairs(themlines) do
-           local rgb = Split(lineb, " ")
-           local chara = getcolorforrange(tonumber(rgb[1]), tonumber(rgb[2]), tonumber(rgb[3]))
-           
-           if currentd ~= 50 then
-               finalstring ..= chara
-           else
-               finalstring ..= chara .. "\n"
-               currentd = 0
-           end
-           currentd += 1
-       end
-       coroutine.wrap(update)(finalstring)
-       task.wait(.03)
-   end
+        local finalstring = ""
+        local currentd = 1
+        local themlines = Split(line:sub(1, -2), "A")
+
+        for _, lineb in pairs(themlines) do
+            local rgb = Split(lineb, " ")
+            local chara = getcolorforrange(tonumber(rgb[1]), tonumber(rgb[2]), tonumber(rgb[3]))
+            finalstring ..= chara
+
+            if currentd ~= 50 then
+                -- continue
+            else
+                finalstring ..= "\n"
+                currentd = 0
+            end
+            currentd += 1
+        end
+
+        -- split final string
+        local chunks = splitTextIntoChunks(finalstring, 200)
+        for _, chunk in ipairs(chunks) do
+            coroutine.wrap(update)(chunk)
+            task.wait(0.03)
+        end
+    end
 end
