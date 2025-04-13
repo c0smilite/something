@@ -1,13 +1,12 @@
 _G.Enabled = true
-local data = game:HttpGet("https://raw.githubusercontent.com/c0smilite/something/refs/heads/main/frames.txt")
+local data = game:HttpGet("https://raw.githubusercontent.com/HiImARealManWannaGoSkateboard/Something/main/frames.txt") -- prerendered amongus video
 
 function update(text)
     local args = {
     [1] = text
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("NameChange"):FireServer(unpack(args))
-
+    game:GetService("ReplicatedStorage"):WaitForChild("NameChange"):FireServer(unpack(args))
 
 end
 
