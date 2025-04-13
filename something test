@@ -3,10 +3,12 @@ local data = game:HttpGet("https://raw.githubusercontent.com/c0smilite/something
 
 function update(text)
     local args = {
-    [1] = text
+    [1] = "RolePlayName",
+    [2] = text
 }
 
-game:GetService("ReplicatedStorage"):WaitForChild("NameChange"):FireServer(unpack(args))
+game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+
 
 
 end
